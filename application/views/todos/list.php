@@ -27,13 +27,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 		
 		<table class="table">
-			<thead class="thead-dark">
+			<thead class="thead-dark text-center">
 				<tr>
 				<th scope="col">ID</th>
 				<th scope="col">Activity</th>
-				<th scope="col">Priority</th>
 				<th scope="col">Deadline</th>
-				<th scope="col">Finished</th>
+				<th scope="col">Priority</th>
+				<th scope="col">Status</th>
 				<th scope="col">Description</th>
 				<th scope="col">Action</th>
 				</tr>
@@ -41,22 +41,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<tbody>
 				<?php foreach ($todos as $todo): ?>
 				<tr>
+				<!-- ID -->
 				<th scope="row"><?= $todo->id?></th>
+				<!-- Activity -->
 				<td><?= $todo->activity?></td>
-				<td><?= $todo->priority?></td>
+				<!-- Deadline -->
 				<td><?= $todo->deadline?></td>
+				<!-- Priority -->
+				<td>
+				<?php if($todo->priority == "high")
+					echo '<button type="button" class="btn btn-outline-danger btn-block" >High';
+				else if($todo->priority == "medium")
+					echo '<button type="button" class="btn btn-outline-warning btn-block">Medium</button>';
+				else
+					echo '<button type="button" class="btn btn-outline-primary btn-block">Low</button>';?>
+				</button></td>
+				<!-- Status -->
 				<td><?php 
-					if($todo->finished == 0) 
-						echo "Not Yet";
+					if($todo->finished == 1) 
+						echo '<button type="button" class="btn btn-outline-success btn-block" >Done';
 					else 
-						echo "Finished";?>
-				</td>
+						echo '<button type="button" class="btn btn-outline-secondary btn-block" >Not Yet';?>
+				</button></td>
+				<!-- Description -->
 				<td><?= $todo->description?></td>
+				<!-- Action -->
 				<td width="250">
 					<a href="<?php echo site_url('todos/edit/'.$todo->id) ?>"
-						class="btn btn-small"><i class="fas fa-edit"></i> Edit</a>
+						class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
 					<a href="<?php echo site_url('todos/delete/'.$todo->id) ?>"
-						class="btn btn-small text-danger"><i class="fas fa-trash"></i> Hapus</a>
+						class="btn btn-danger"><i class="fa fa-ban"></i> Hapus</a>
 				</td>
 				</tr>
 				<?php endforeach; ?>
@@ -81,10 +95,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 
 					<form action="<?php echo site_url('todos/add') ?>" method="post" enctype="multipart/form-data" >
-				
 						<div class="modal-body">
 							<div class="form-group">
-								<b><label for="name">Activity*</label></b>
+								<b><label for="name">Activity</label></b>
 								<input class="form-control <?php echo form_error('activity') ? 'is-invalid':'' ?>"
 									type="text" name="activity" placeholder="Activity name" />
 								<div class="invalid-feedback">
@@ -93,7 +106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 
 							<div class="form-group">
-								<b><label for="name">Priority*</label><br></b>
+								<b><label for="name">Priority</label><br></b>
 								<input type="radio" name="priority" value="high"> High
 								<input type="radio" name="priority" value="medium"> Medium
 								<input type="radio" name="priority" value="low"> Low
@@ -103,12 +116,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							
 							<div class="form-group">
-								<b><label for="deadline">Deadline*</label></b>
+								<b><label for="deadline">Deadline</label></b><br>
 								<input type="date" id="start" name="deadline">
 							</div>
 
 							<div class="form-group">
-								<b><label for="name">Description*</label></b>
+								<b><label for="name">Description</label></b>
 								<textarea class="form-control <?php echo form_error('description') ? 'is-invalid':'' ?>"
 									name="description" placeholder="Description"></textarea>
 								<div class="invalid-feedback">
@@ -119,10 +132,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
 							<input class="btn btn-success" type="submit" name="btn" value="Save" />
 						</div>
-
 					</form>
 
 				</div>

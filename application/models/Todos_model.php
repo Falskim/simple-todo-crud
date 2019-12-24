@@ -46,6 +46,7 @@ class Todos_model extends CI_Model {
         $this->priority = $post["priority"];
         $this->finished = $post["finished"];
         $this->deadline = $post["deadline"];
+        $this->finished = $post["finished"];
         $this->description = $post["description"];
         $this->db->update('todos', $this, array('id' => $post['id']));
     }
