@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>My To Do List</title>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
@@ -15,14 +15,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</style>
 </head>
 <body>
-	<div class="header jumbotron bg-dark text-white">
-		<h1> Simple TODO Website </h1>
-	</div>	
+	
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+		<a class="navbar-brand" href="#">
+			<h4 class="font-weight-bold m-0">
+				<span style="color: coral">F</span>SM
+			</h4>
+		</a>
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse text-center" id="collapsibleNavbar">
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+			<ul class="navbar-nav my-2 my-lg-0">
+				<li class="nav-item">
+					<a class="btn btn-primary" href="<?php echo base_url('login/logout'); ?>">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
 	<div class="container-fluid p-5">
-		
 	
 		<div class="text-center">
-			<h3><b> To Do List </b></h3>
+			<h3><b>My To Do List </b></h3>
 			<hr>
 		</div>
 		
@@ -42,11 +62,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php foreach ($todos as $todo): ?>
 				<tr>
 				<!-- ID -->
-				<th scope="row"><?= $todo->id?></th>
+				<th scope="row" class="text-primary"><?= $todo->id?></th>
 				<!-- Activity -->
 				<td><?= $todo->activity?></td>
 				<!-- Deadline -->
-				<td><?= $todo->deadline?></td>
+				<td><?php 
+				if($todo->deadline != "0000-00-00")
+					echo $todo->deadline;?>
+				</td>
 				<!-- Priority -->
 				<td>
 				<?php if($todo->priority == "high")
@@ -57,20 +80,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo '<button type="button" class="btn btn-outline-primary btn-block">Low</button>';?>
 				</button></td>
 				<!-- Status -->
-				<td><?php 
+				<td width="150"><?php 
 					if($todo->finished == 1) 
-						echo '<button type="button" class="btn btn-outline-success btn-block" >Done';
+						echo '</i><button type="button" class="btn btn-outline-success btn-block" ><i class="fa fa-check"> Done';
 					else 
-						echo '<button type="button" class="btn btn-outline-secondary btn-block" >Not Yet';?>
+						echo '</i><button type="button" class="btn btn-outline-secondary btn-block" ><i class="fa fa-times"></i> Not Yet';?>
 				</button></td>
 				<!-- Description -->
 				<td><?= $todo->description?></td>
 				<!-- Action -->
-				<td width="250">
+				<td width="250" class="text-center">
 					<a href="<?php echo site_url('todos/edit/'.$todo->id) ?>"
 						class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
 					<a href="<?php echo site_url('todos/delete/'.$todo->id) ?>"
-						class="btn btn-danger"><i class="fa fa-ban"></i> Hapus</a>
+						class="btn btn-danger"><i class="fa fa-ban"></i> Delete</a>
 				</td>
 				</tr>
 				<?php endforeach; ?>
@@ -99,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div class="form-group">
 								<b><label for="name">Activity</label></b>
 								<input class="form-control <?php echo form_error('activity') ? 'is-invalid':'' ?>"
-									type="text" name="activity" placeholder="Activity name" />
+									type="text" name="activity" placeholder="Activity name" required />
 								<div class="invalid-feedback">
 									<?php echo form_error('name') ?>
 								</div>
@@ -140,13 +163,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>
 	</div>
-
 	<div class="footer bg-dark p-3">
 		<div class="container-fluid text-center text-white">
 			<a>Created by Fawwaz Syiham Muyassar</a>
 		</div>
 	</div>
-
+	
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 

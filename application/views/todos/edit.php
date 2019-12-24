@@ -3,17 +3,36 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Simple TODO CRUD</title>
+	<title>Edit To Do</title>
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-grid.min.css'); ?>">
 </head>
 
 <body>
-    <div class="container-fluid p-5">
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">
+            <h4 class="font-weight-bold m-0">
+                <span style="color: coral">F</span>SM
+            </h4>
+        </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center" id="collapsibleNavbar">
+        </div>
+    </nav>
+
+    <div class="container-fluid py-2 px-4 m-5">
         <form action="<?php echo site_url('todos/edit') ?>" method="post" enctype="multipart/form-data">
             <div class="container text-center">
-                <h5>Edit Todo #<?= $todo->id ?></h5><br>
+                <h4>Edit Todo #<?= $todo->id ?></h4><br>
             </div>
+            <hr>
             <input type="hidden" name="id" value="<?= $todo->id?>" />
 
             <div class="form-group">
@@ -51,13 +70,19 @@
             </div>
 
             <div class="form-group">
-                <b><label for="name">Is Done ?</label></b><br>
-                <input type="checkbox" name="finished" value="1" <?=$todo->finished == 1 ? "checked" : ""?>> Yes
+                <b><label for="name">Done </label></b>
+                <input type="checkbox" name="finished" value="1" <?=$todo->finished == 1 ? "checked" : ""?>>
             </div>
 
             <input class="btn btn-success" type="submit" name="btn" value="Save" />
         </form>
     </div>
+
+	<div class="footer bg-dark p-3">
+		<div class="container-fluid text-center text-white">
+			<a>Created by Fawwaz Syiham Muyassar</a>
+		</div>
+	</div>
 </body>
 
 </html>
